@@ -1,18 +1,20 @@
-import Foundation
+let M = 1234567891
+let l = Int(readLine()!)!
+let array = readLine()!.map { Int($0.asciiValue!) - 96 }
 
-//5
-//abcde
+var answer = 0
 
-let asciiIntValue_A = Int(UnicodeScalar("a").value)
-
-var IntArray : [Int] = []
-var result = 0
-var N = Int(readLine()!)!
-var input : [Character] = []
-input = readLine()!.map { $0 }
-for (i, value) in input.enumerated(){
-    var r = Int(UnicodeScalar(String(value))!.value)-asciiIntValue_A
-    result += (r+1) * Int(pow(Double(31),Double(i)))
+func pow31(_ r: Int) -> Int {
+    var answer = 1
+    for _ in 0..<r {
+        answer *= 31
+        answer %= M
+    }
+    return answer % M
 }
-print(result)
 
+for i in 0..<l {
+    answer += array[i] * pow31(i)
+    answer %= M
+}
+print(answer % M)
